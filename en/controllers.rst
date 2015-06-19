@@ -464,6 +464,8 @@ Each of these variables are merged with their inherited values,
 therefore it is not necessary (for example) to redeclare the
 ``FormHelper``, or anything that is declared in your ``AppController``.
 
+Though it's recommended to load default helpers using :ref:`app-view`.
+
 .. _controller-life-cycle:
 
 Request Life-cycle Callbacks

@@ -39,6 +39,13 @@ FlashComponent
   or ``__call()`` method. This means that the structure in the Session for
   stored Flash messages has changed.
 
+RequestHandlerComponent
+-----------------------
+
+- ``RequestHandlerComponent`` now switches the layout and template based on
+  the parsed extension or Accept-Type header in the ``beforeRender()`` callback
+  instead of ``startup()``.
+
 ORM
 ===
 
