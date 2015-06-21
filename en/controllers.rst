@@ -447,25 +447,6 @@ CakePHP for you. Read the :ref:`configuring-components` section for more
 information. As mentioned earlier the ``$components`` property will be merged
 with the property defined in each of you controller's parent classes.
 
-Configuring Helpers to Load
-===========================
-
-.. php:attr:: helpers
-
-Let's look at how to tell a CakePHP Controller that you plan to use
-additional MVC classes::
-
-    class RecipesController extends AppController
-    {
-        public $helpers = ['Form'];
-    }
-
-Each of these variables are merged with their inherited values,
-therefore it is not necessary (for example) to redeclare the
-``FormHelper``, or anything that is declared in your ``AppController``.
-
-Though it's recommended to load default helpers using :ref:`app-view`.
-
 .. _controller-life-cycle:
 
 Request Life-cycle Callbacks
