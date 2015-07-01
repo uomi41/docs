@@ -1,16 +1,11 @@
 Quick Start Guide
 *****************
 
-.. note::
-    The documentation is not currently supported in Japanese language for this
-    page.
+CakePHPを体験し学ぶ最良の方法は腰を据えて何かを作ることです。
+手始めに、単純なブックマークアプリケーションを構築します。
 
-    Please feel free to send us a pull request on
-    `Github <https://github.com/cakephp/docs>`_ or use the **Improve This Doc**
-    button to directly propose your changes.
-
-    You can referer to the english version in the select top menu to have
-    information about this page's topic.
+.. The best way to experience and learn CakePHP is to sit down and build something.
+.. To start off we'll build a simple bookmarking application.
 
 .. include:: /tutorials-and-examples/bookmarks/intro.rst
 .. include:: /tutorials-and-examples/bookmarks/part-two.rst
