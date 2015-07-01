@@ -1,9 +1,9 @@
-ブックメーカーチュートリアル
+ブックマーカーチュートリアル
 ########################
 .. Bookmarker Tutorial
 .. ###################
 
-このチュートリアルでは単純なブックマークアプリケーション（ブックメーカー）の作り方を説明します。
+このチュートリアルでは単純なブックマークアプリケーション（ブックマーカー）の作り方を説明します。
 手始めに、CakePHPをインストールしてデータベースを作成し、CakePHPのツールを使用してアプリケーションを立ち上げましょう。
 
 .. This tutorial will walk you through the creation of a simple bookmarking
@@ -52,7 +52,7 @@ CakePHPをインストールする最も簡単な方法はComposerを使用す�
 .. `Composer website <https://getcomposer.org/download/>`_.
 
 次に、CakePHPアプリケーションのスケルトンを作成するために、
-ターミナルで **ブックメーカー** のインストールするディレクトリで以下のコマンドを実行してください::
+ターミナルで **ブックマーカー** のインストールするディレクトリで以下のコマンドを実行してください::
 
     php composer.phar create-project --prefer-dist cakephp/app bookmarker
 
