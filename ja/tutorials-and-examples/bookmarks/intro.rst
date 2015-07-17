@@ -1,5 +1,5 @@
 ブックマーカーチュートリアル
-########################
+############################
 .. Bookmarker Tutorial
 .. ###################
 
@@ -31,7 +31,7 @@
 .. Let's get started!
 
 Cakeのダウンロード
-================
+==================
 .. Getting CakePHP
 .. ===============
 
@@ -134,31 +134,47 @@ CakePHPのディレクトリ構造について少し理解するには今が良�
 .. Now might be a good time to learn a bit about how CakePHP's directory structure
 .. works: check out the :doc:`/intro/cakephp-folder-structure` section.
 
-Checking our Installation
-=========================
+インストールを確認する
+======================
 
-We can quickly check that our installation is correct, by checking the default
-home page. Before you can do that, you'll need to start the development server::
+.. Checking our Installation
+.. =========================
+
+デフォルトのホームページを確認することで、インストールが正しいことを簡単に確認することができます。
+確認する前に、開発サーバーを起動する必要があります。
 
     bin/cake server
 
+.. We can quickly check that our installation is correct, by checking the default
+.. home page. Before you can do that, you'll need to start the development server::
+
+..     bin/cake server
+
 .. note::
 
-    For Windows, the command needs to be ``bin\cake`` (note the backslash).
+    Windowsの場合のコマンドは ``bin\cake`` (バックスラッシュに注目)
+..    For Windows, the command needs to be ``bin\cake`` (note the backslash).
 
-This will start PHP's built-in webserver on port 8765. Open up
-**http://localhost:8765** in your web browser to see the welcome page. All the
-bullet points should be checkmarks other than CakePHP being able to connect to
-your database. If not, you may need to install additional PHP extensions, or set
-directory permissions.
+これでPHPビルトインのウェブサーバーがポート8765で起動します。
+ウェルカムページを見るために **http://localhost:8765** をウェブブラウザで開いてください。
+CakePHPがデータベースに接続できること以外の箇条書きのすべての項目にチェックがついている必要があります。
+そうでない場合、追加のPHPエクステンションをインストールする、またはディレクトリのパーミッションを設定する必要があります。
 
-Creating the Database
-=====================
+.. This will start PHP's built-in webserver on port 8765. Open up
+.. **http://localhost:8765** in your web browser to see the welcome page. All the
+.. bullet points should be checkmarks other than CakePHP being able to connect to
+.. your database. If not, you may need to install additional PHP extensions, or set
+.. directory permissions.
 
-Next, let's set up the database for our bookmarking application. If you
-haven't already done so, create an empty database for use in this
-tutorial, with a name of your choice, e.g. ``cake_bookmarks``. You can execute
-the following SQL to create the necessary tables::
+データベースを作成する
+======================
+
+.. Creating the Database
+.. =====================
+
+次に、ブックマークアプリケーション用のデータベースをセットアップしましょう。
+もし済んでいない場合は、このチュートリアルのために空のデータベースを作成し、名前をつけてください。（例えば ``cake_bookmarks`` ）
+必要なテーブルを作成するために、以下のSQLを実行してください::
 
     CREATE TABLE users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -195,27 +211,81 @@ the following SQL to create the necessary tables::
         FOREIGN KEY bookmark_key(bookmark_id) REFERENCES bookmarks(id)
     );
 
-You may have noticed that the ``bookmarks_tags`` table used a composite primary
-key. CakePHP supports composite primary keys almost everywhere, making it easier
-to build multi-tenanted applications.
+.. Next, let's set up the database for our bookmarking application. If you
+.. haven't already done so, create an empty database for use in this
+.. tutorial, with a name of your choice, e.g. ``cake_bookmarks``. You can execute
+.. the following SQL to create the necessary tables::
 
-The table and column names we used were not arbitrary. By using CakePHP's
-:doc:`naming conventions </intro/conventions>`, we can leverage CakePHP better
-and avoid having to configure the framework. CakePHP is flexible enough to
-accommodate even inconsistent legacy database schemas, but adhering to the
-conventions will save you time.
+..     CREATE TABLE users (
+..         id INT AUTO_INCREMENT PRIMARY KEY,
+..         email VARCHAR(255) NOT NULL,
+..         password VARCHAR(255) NOT NULL,
+..         created DATETIME,
+..         modified DATETIME
+..     );
 
-Database Configuration
-======================
+..     CREATE TABLE bookmarks (
+..         id INT AUTO_INCREMENT PRIMARY KEY,
+..         user_id INT NOT NULL,
+..         title VARCHAR(50),
+..         description TEXT,
+..         url TEXT,
+..         created DATETIME,
+..         modified DATETIME,
+..         FOREIGN KEY user_key (user_id) REFERENCES users(id)
+..     );
 
-Next, let's tell CakePHP where our database is and how to connect to it.
-For many, this will be the first and last time you will need to configure
-anything.
+..     CREATE TABLE tags (
+..         id INT AUTO_INCREMENT PRIMARY KEY,
+..         title VARCHAR(255),
+..         created DATETIME,
+..         modified DATETIME,
+..         UNIQUE KEY (title)
+..     );
 
-The configuration should be pretty straightforward: just replace the
-values in the ``Datasources.default`` array in the **config/app.php** file
-with those that apply to your setup. A sample completed configuration
-array might look something like the following::
+..     CREATE TABLE bookmarks_tags (
+..         bookmark_id INT NOT NULL,
+..         tag_id INT NOT NULL,
+..         PRIMARY KEY (bookmark_id, tag_id),
+..         FOREIGN KEY tag_key(tag_id) REFERENCES tags(id),
+..         FOREIGN KEY bookmark_key(bookmark_id) REFERENCES bookmarks(id)
+..     );
+
+★
+お気づきかもしれませんが ``bookmarks_tags`` テーブルは複合主キーを使用しています。
+CakePHPはほとんどどこでも複合主キーをサポートしており、簡単にマルチテナントアプリケーションを構築できます。
+
+.. You may have noticed that the ``bookmarks_tags`` table used a composite primary
+.. key. CakePHP supports composite primary keys almost everywhere, making it easier
+.. to build multi-tenanted applications.
+
+テーブルとカラムに使用した名前は気まぐれではありません。
+CakePHPの :doc:`命名規約 </intro/conventions>` を使用することで、
+CakePHPをよりよく活用でき、フレームワークの設定を省くことができます。
+CakePHPは一貫性の無いレガシィなデータベースにも十分に柔軟に対応しますが、規約を順守することで時間が節約されます。
+
+.. The table and column names we used were not arbitrary. By using CakePHP's
+.. :doc:`naming conventions </intro/conventions>`, we can leverage CakePHP better
+.. and avoid having to configure the framework. CakePHP is flexible enough to
+.. accommodate even inconsistent legacy database schemas, but adhering to the
+.. conventions will save you time.
+
+データベース設定
+================
+
+.. Database Configuration
+.. ======================
+
+次に、データベースの場所とどうやってつなぐかをCakePHPに伝えましょう。
+多くの場合、これが何かを設定する最初で最後になるでしょう。
+
+.. Next, let's tell CakePHP where our database is and how to connect to it.
+.. For many, this will be the first and last time you will need to configure
+.. anything.
+
+この設定はとても簡単です。
+単に **config/app.php** ファイルの ``Datasources.default`` の配列の値をセットアップするものに置き換えてください。
+完成されたサンプルの設定の配列は以下のようになるでしょう::
 
     return [
         // More configuration above.
@@ -236,45 +306,103 @@ array might look something like the following::
         // More configuration below.
     ];
 
-Once you've saved your **config/app.php** file, you should see that 'CakePHP is
-able to connect to the database' section have a checkmark.
+.. The configuration should be pretty straightforward: just replace the
+.. values in the ``Datasources.default`` array in the **config/app.php** file
+.. with those that apply to your setup. A sample completed configuration
+.. array might look something like the following::
+
+..     return [
+..         // More configuration above.
+..         'Datasources' => [
+..             'default' => [
+..                 'className' => 'Cake\Database\Connection',
+..                 'driver' => 'Cake\Database\Driver\Mysql',
+..                 'persistent' => false,
+..                 'host' => 'localhost',
+..                 'username' => 'cakephp',
+..                 'password' => 'AngelF00dC4k3~',
+..                 'database' => 'cake_bookmarks',
+..                 'encoding' => 'utf8',
+..                 'timezone' => 'UTC',
+..                 'cacheMetadata' => true,
+..             ],
+..         ],
+..         // More configuration below.
+..     ];
+
+
+一度 **config/app.php** ファイルを保存すると、 'CakePHP is able to connect to the database' の項目にチェックがつきます。
+
+.. Once you've saved your **config/app.php** file, you should see that 'CakePHP is
+.. able to connect to the database' section have a checkmark.
 
 .. note::
 
-    A copy of CakePHP's default configuration file is found in
-    **config/app.default.php**.
+   CakePHPのデフォルトの設定ファイルのコピーは **config/app.default.php** にあります。
 
-Generating Scaffold Code
-========================
+..    A copy of CakePHP's default configuration file is found in
+..    **config/app.default.php**.
 
-Because our database is following the CakePHP conventions, we can use the
-:doc:`bake console </bake/usage>` application to quickly generate a basic
-application. In your command line run the following commands::
+スキャフォールドコードを生成する
+======================================
 
-    // On windows you'll need to use bin\cake instead.
+.. Generating Scaffold Code
+.. ========================
+
+なぜならデータベースがCakePHPの規約に沿っているので、素早く基本のアプリケーションを生成するために、 :doc:`bake console </bake/usage>` アプリケーションを使用することができます。
+コマンドラインで以下のコマンドを実行してください::
+
+    // Windowsの場合はかわり bin\cake を使用してください。
     bin/cake bake all users
     bin/cake bake all bookmarks
     bin/cake bake all tags
 
-This will generate the controllers, models, views, their corresponding test
-cases, and fixtures for our users, bookmarks and tags resources. If you've
-stopped your server, restart it and go to **http://localhost:8765/bookmarks**.
+.. Because our database is following the CakePHP conventions, we can use the
+.. :doc:`bake console </bake/usage>` application to quickly generate a basic
+.. application. In your command line run the following commands::
 
-You should see a basic but functional application providing data access to your
-application's database tables. Once you're at the list of bookmarks, add a few
-users, bookmarks, and tags.
+..     // On windows you'll need to use bin\cake instead.
+..     bin/cake bake all users
+..     bin/cake bake all bookmarks
+..     bin/cake bake all tags
+
+これでコントローラーとモデル、ビュー、それらに対応するテストケース、ユーザー・ブックマーク・タグのリソースのフィクスチャが生成されます。
+もしサーバーを停止していたら、再起動して **http://localhost:8765/bookmarks** を開いてください。
+
+.. This will generate the controllers, models, views, their corresponding test
+.. cases, and fixtures for our users, bookmarks and tags resources. If you've
+.. stopped your server, restart it and go to **http://localhost:8765/bookmarks**.
+
+★
+基本的で機能的なアプリケーションが提供しているデータベーステーブルへのデータアクセスを見てください。
+一度ブックマークの一覧で、何人かのユーザーとブックマーク、タグを作ってください。
+
+.. You should see a basic but functional application providing data access to your
+.. application's database tables. Once you're at the list of bookmarks, add a few
+.. users, bookmarks, and tags.
 
 .. note::
 
-    If you see a Not Found (404) page, confirm that the Apache mod_rewrite
-    module is loaded.
+    もしNot Found(404)ページが表示されたら、Apacheのmod_rewriteモジュールが読み込まれているかを確認してください。
 
-Adding Password Hashing
-=======================
+..    If you see a Not Found (404) page, confirm that the Apache mod_rewrite
+..    module is loaded.
 
-When you created your users, you probably noticed that the passwords were stored
-in plain text. This is pretty bad from a security point of view, so let's get
-that fixed.
+パスワードハッシングを追加する
+==============================
+
+.. Adding Password Hashing
+.. =======================
+
+ユーザーを作成した時、パスワードが平文で保存されたことにおそらく気づいたでしょう。
+セキュリティの観点では非常に良くありません。それでは修正してみましょう。
+
+.. When you created your users, you probably noticed that the passwords were stored
+.. in plain text. This is pretty bad from a security point of view, so let's get
+.. that fixed.
+
+これはCakePHPのモデルレイヤーについてお話するいい機会でしょう。
+CakePHPでは、オブジェクトのコレクションを操作するメソッドを分離し、異なるクラスにひとつのオブジェクトの
 
 This is also a good time to talk about the model layer in CakePHP. In CakePHP,
 we separate the methods that operate on a collection of objects, and a single
